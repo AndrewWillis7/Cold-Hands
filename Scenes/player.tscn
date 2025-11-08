@@ -1,0 +1,34 @@
+[gd_scene load_steps=6 format=3 uid="uid://bo0pwsa6hw5ue"]
+
+[ext_resource type="Script" uid="uid://cviergfygvp8s" path="res://src/playerMov.gd" id="1_cvnsp"]
+[ext_resource type="Script" uid="uid://4hr66rqthv2f" path="res://src/playerStateMachine.gd" id="1_v0iea"]
+[ext_resource type="Texture2D" uid="uid://q1sql8qeueli" path="res://lib/sprites/TemplateCharacter.png.png" id="2_vgqql"]
+[ext_resource type="Script" uid="uid://h5ryvusbe7n5" path="res://src/camera.gd" id="3_6t5aa"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_cvnsp"]
+
+[node name="Player" type="Node3D"]
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
+script = ExtResource("1_cvnsp")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_cvnsp")
+
+[node name="Sprite3D" type="Sprite3D" parent="CharacterBody3D"]
+offset = Vector2(0, 16)
+pixel_size = 0.1
+texture_filter = 0
+texture = ExtResource("2_vgqql")
+
+[node name="Grounded" type="RayCast3D" parent="."]
+
+[node name="PlayerStateMachine" type="Node" parent="."]
+script = ExtResource("1_v0iea")
+
+[node name="Camera" type="Node3D" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="Camera"]
+script = ExtResource("3_6t5aa")
+follow_target = NodePath("../../CharacterBody3D")

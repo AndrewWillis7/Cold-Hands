@@ -1,4 +1,15 @@
 63f7b34db8d8cdea90c76aacccf841ec
-::res://::1762558849
+::res://::1762566484
 icon.svg::CompressedTexture2D::1790880795757653::1762558788::1762558792::1::::<><><>0<>0<>1d558fff71561543e2cf7e0d300c3350<>res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex::
 README.md::TextFile::-1::1762558519::0::1::::<><><>0<>0<><>::
+::res://lib/::1762566114
+::res://lib/sprites/::1762566440
+TemplateCharacter.png.png::CompressedTexture2D::1177817427854847534::1762566118::1762566440::1::::<><><>0<>0<>214730a8df107412236a75139c7ae529<>res://.godot/imported/TemplateCharacter.png.png-01acb2ad054ec24b1d9c6d0b929db781.s3tc.ctex::
+::res://Scenes/::1762566359
+player.tscn::PackedScene::3421624927673508644::1762566359::0::1::::<><><>0<>0<><>::uid://cviergfygvp8s::::res://src/playerMov.gd<>uid://4hr66rqthv2f::::res://src/playerStateMachine.gd<>uid://q1sql8qeueli::::res://lib/sprites/TemplateCharacter.png.png<>uid://h5ryvusbe7n5::::res://src/camera.gd
+world.tscn::PackedScene::2923886333179443312::1762562672::0::1::::<><><>0<>0<><>::uid://bo0pwsa6hw5ue::::res://Scenes/player.tscn
+::res://src/::1762566359
+camera.gd::GDScript::554329420724577352::1762562258::0::1::::<>Camera3D<><>0<>0<><>::
+input_abstraction.gd::GDScript::104526870474338269::1762566359::0::1::::<>Node<><>0<>0<><>::
+playerMov.gd::GDScript::6263595656248244472::1762562179::0::1::::<>CharacterBody3D<><>0<>0<><>::
+playerStateMachine.gd::GDScript::2051016313507626263::1762564552::0::1::::<>Node<><>0<>0<><>::
