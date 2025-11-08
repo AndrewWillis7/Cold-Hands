@@ -10,12 +10,13 @@ extends CharacterBody3D
 
 func _physics_process(delta: float) -> void:
 	state_machine.update_state(delta)
+	move_character(delta)
 
 func move_character(delta):
 	var input_dir = input_controller.get_move_input()
 	var direction = (transform.basis.x * input_dir.x) + (transform.basis.z * input_dir.y)
 	direction.y = 0
-	direction = direction.normalized()
+	direction = -direction.normalized()
 	
 	if direction != Vector3.ZERO:
 		# Character is moving

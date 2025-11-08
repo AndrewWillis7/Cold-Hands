@@ -19,6 +19,7 @@ shape = SubResource("CapsuleShape3D_cvnsp")
 [node name="Sprite3D" type="Sprite3D" parent="CharacterBody3D"]
 offset = Vector2(0, 16)
 pixel_size = 0.1
+billboard = 1
 texture_filter = 0
 texture = ExtResource("2_vgqql")
 
@@ -32,3 +33,4 @@ script = ExtResource("1_v0iea")
 [node name="Camera3D" type="Camera3D" parent="Camera"]
 script = ExtResource("3_6t5aa")
 follow_target = NodePath("../../CharacterBody3D")
+offset = Vector3(0, 9, -10)

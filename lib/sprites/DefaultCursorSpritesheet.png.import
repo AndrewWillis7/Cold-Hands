@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://q1sql8qeueli"
-path="res://.godot/imported/TemplateCharacter.png.png-01acb2ad054ec24b1d9c6d0b929db781.ctex"
+uid="uid://brgiovaxqtf87"
+path="res://.godot/imported/DefaultCursorSpritesheet.png-7fff42132c7963dd778770a75c0d0b33.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://lib/sprites/TemplateCharacter.png.png"
-dest_files=["res://.godot/imported/TemplateCharacter.png.png-01acb2ad054ec24b1d9c6d0b929db781.ctex"]
+source_file="res://lib/sprites/DefaultCursorSpritesheet.png"
+dest_files=["res://.godot/imported/DefaultCursorSpritesheet.png-7fff42132c7963dd778770a75c0d0b33.ctex"]
 
 [params]
 

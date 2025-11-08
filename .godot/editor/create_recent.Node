@@ -1,5 +1,7 @@
-MeshInstance3D
+AnimatedSprite2D
+Node2D
 Sprite3D
+MeshInstance3D
 CollisionShape3D
 StaticBody3D
 Camera3D

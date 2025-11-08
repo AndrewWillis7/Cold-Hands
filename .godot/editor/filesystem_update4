@@ -1,3 +1,5 @@
 res://Scenes/player.tscn
+res://Scenes/cursor.tscn
+res://src/cursor.gd
+res://src/CursorManager.gd
 res://Scenes/world.tscn
-res://src/camera.gd
