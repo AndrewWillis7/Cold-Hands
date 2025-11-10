@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://brgiovaxqtf87"
-path="res://.godot/imported/DefaultCursorSpritesheet.png-7fff42132c7963dd778770a75c0d0b33.ctex"
+uid="uid://l7ctrobglhcy"
+path="res://.godot/imported/TopHead.png-f306e10c15b956779979f13940b39016.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://lib/sprites/DefaultCursorSpritesheet.png"
-dest_files=["res://.godot/imported/DefaultCursorSpritesheet.png-7fff42132c7963dd778770a75c0d0b33.ctex"]
+source_file="res://lib/player_sprites/TopHead.png"
+dest_files=["res://.godot/imported/TopHead.png-f306e10c15b956779979f13940b39016.ctex"]
 
 [params]
 

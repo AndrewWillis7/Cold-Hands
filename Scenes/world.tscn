@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://bhwl8lyksx737"]
 
-[ext_resource type="PackedScene" uid="uid://bo0pwsa6hw5ue" path="res://Scenes/player.tscn" id="1_a02cp"]
-[ext_resource type="PackedScene" uid="uid://noalk3xvtulg" path="res://Scenes/cursor.tscn" id="2_go701"]
+[ext_resource type="PackedScene" uid="uid://bo0pwsa6hw5ue" path="res://scenes/player.tscn" id="1_a02cp"]
+[ext_resource type="PackedScene" uid="uid://noalk3xvtulg" path="res://scenes/cursor.tscn" id="2_go701"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_go701"]
 
@@ -23,3 +23,7 @@ mesh = SubResource("BoxMesh_a02cp")
 
 [node name="Cursor" parent="." instance=ExtResource("2_go701")]
 attacking = true
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14.327106, 0)
+shadow_enabled = true

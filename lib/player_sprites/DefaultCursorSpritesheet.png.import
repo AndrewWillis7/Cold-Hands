@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cj0xee8h4abli"
-path="res://.godot/imported/ReticleSpritesheet.png-60f674b8407d5b34718d5f20a63da872.ctex"
+uid="uid://brgiovaxqtf87"
+path="res://.godot/imported/DefaultCursorSpritesheet.png-c2cca03a03635658cf62573e3ceafec8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://lib/sprites/ReticleSpritesheet.png"
-dest_files=["res://.godot/imported/ReticleSpritesheet.png-60f674b8407d5b34718d5f20a63da872.ctex"]
+source_file="res://lib/player_sprites/DefaultCursorSpritesheet.png"
+dest_files=["res://.godot/imported/DefaultCursorSpritesheet.png-c2cca03a03635658cf62573e3ceafec8.ctex"]
 
 [params]
 

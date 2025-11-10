@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://dj7sdpjsj2udc"]
+
+[ext_resource type="Texture2D" uid="uid://cd1emls5ym1va" path="res://lib/player_sprites/Footprint.png" id="1_fvvu4"]
+[ext_resource type="Script" uid="uid://bnfvtcdctrjh2" path="res://src/footprint.gd" id="2_6pgvp"]
+
+[node name="Footprints" type="Node3D"]
+script = ExtResource("2_6pgvp")
+
+[node name="Sprite" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+modulate = Color(0.32544088, 0.3254409, 0.32544088, 1)
+pixel_size = 0.1
+no_depth_test = true
+texture_filter = 0
+texture = ExtResource("1_fvvu4")
