@@ -1,0 +1,57 @@
+[gd_scene load_steps=8 format=3 uid="uid://byeqdow277rdc"]
+
+[ext_resource type="Texture2D" uid="uid://r0ajp5x5feuo" path="res://lib/dog_sprites/default_dog/DogSleeping.png" id="1_on80e"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_vwjdu"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qjqk5"]
+atlas = ExtResource("1_on80e")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gmowd"]
+atlas = ExtResource("1_on80e")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tpbal"]
+atlas = ExtResource("1_on80e")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iaoh4"]
+atlas = ExtResource("1_on80e")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_i2xh6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qjqk5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gmowd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tpbal")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iaoh4")
+}],
+"loop": true,
+"name": &"Sleep",
+"speed": 1.5
+}]
+
+[node name="Dog" type="Node3D"]
+
+[node name="Area" type="Area3D" parent="."]
+
+[node name="Collider" type="CollisionShape3D" parent="Area"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CylinderShape3D_vwjdu")
+
+[node name="sprite" type="AnimatedSprite3D" parent="."]
+offset = Vector2(0, 15)
+pixel_size = 0.1
+texture_filter = 0
+sprite_frames = SubResource("SpriteFrames_i2xh6")
+animation = &"Sleep"
+frame_progress = 0.68317056

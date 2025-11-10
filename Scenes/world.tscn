@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://bhwl8lyksx737"]
+[gd_scene load_steps=6 format=3 uid="uid://bhwl8lyksx737"]
 
 [ext_resource type="PackedScene" uid="uid://bo0pwsa6hw5ue" path="res://scenes/player.tscn" id="1_a02cp"]
 [ext_resource type="PackedScene" uid="uid://noalk3xvtulg" path="res://scenes/cursor.tscn" id="2_go701"]
+[ext_resource type="PackedScene" uid="uid://byeqdow277rdc" path="res://scenes/dog.tscn" id="3_4wyf3"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_go701"]
 
@@ -27,3 +28,6 @@ attacking = true
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14.327106, 0)
 shadow_enabled = true
+
+[node name="Dog" parent="." instance=ExtResource("3_4wyf3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 1, 0)

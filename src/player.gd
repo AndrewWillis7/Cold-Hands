@@ -5,6 +5,9 @@ extends CharacterBody3D
 @export var jump_force := 8.0
 @export var gravity := 20.0
 
+@export var has_friction := true
+@export var friction_strength := 20.0
+
 @onready var state_machine = $"../PlayerStateMachine"
 @onready var input_controller = preload("res://src/input_abstraction.gd").new()
 
@@ -94,8 +97,15 @@ func move_character(delta):
 	else:
 		move_state = MoveDirection.IDLE
 		play_new_anim("standForward")
-		velocity.x = move_toward(velocity.x, 0, speed * delta)
-		velocity.z = move_toward(velocity.z, 0, speed * delta)
+		
+		if has_friction:
+			# quick deceleration for snapped stop
+			velocity.x = move_toward(velocity.x, 0, friction_strength * delta)
+			velocity.z = move_toward(velocity.z, 0, friction_strength * delta)
+		else:
+			# Slower glide for "icy" feel
+			velocity.x = move_toward(velocity.x, 0, speed * delta * 0.3)
+			velocity.z = move_toward(velocity.z, 0, speed * delta * 0.3)
 	
 	if not is_on_floor():
 		velocity.y -= gravity * delta

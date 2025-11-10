@@ -26,7 +26,8 @@ func _process(delta: float) -> void:
 
 	# --- Follow the player with smoothed offset
 	var desired_position = target.global_transform.origin + current_offset
-	global_transform.origin = global_transform.origin.lerp(desired_position, delta * smooth_speed)
+	#global_transform.origin = global_transform.origin.lerp(desired_position, delta * smooth_speed)
+	global_transform.origin = desired_position
 
 	# --- Always look at player
 	look_at(target.global_transform.origin, Vector3.UP)
