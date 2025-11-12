@@ -18,7 +18,7 @@ extends CharacterBody3D
 @onready var shadow = $Shadow
 
 # Footprints
-@onready var footprint_scene = preload("res://scenes/footprints.tscn")
+@onready var footprint_scene = preload("res://Scenes/footprints.tscn")
 var last_foot_pos = Vector3.ZERO
 var step_dist = 1.2 # distance before next footprint
 
