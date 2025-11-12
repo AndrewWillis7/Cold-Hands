@@ -41,8 +41,10 @@ animations = [{
 script = ExtResource("1_8pp82")
 
 [node name="mainCursor" type="AnimatedSprite2D" parent="."]
+scale = Vector2(4, 4)
 sprite_frames = SubResource("SpriteFrames_p45ix")
 frame_progress = 0.55613625
 
 [node name="reticle" type="AnimatedSprite2D" parent="."]
+scale = Vector2(4, 4)
 sprite_frames = SubResource("SpriteFrames_4p814")

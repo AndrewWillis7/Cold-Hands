@@ -1,8 +1,5 @@
 res://scenes/player.tscn
+res://scenes/dog.tscn
 res://scenes/cursor.tscn
-res://scenes/footprints.tscn
-res://src/footprint.gd
 res://src/player.gd
 res://scenes/world.tscn
-res://src/camera.gd
-res://scenes/dog.tscn

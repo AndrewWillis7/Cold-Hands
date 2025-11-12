@@ -54,4 +54,4 @@ pixel_size = 0.1
 texture_filter = 0
 sprite_frames = SubResource("SpriteFrames_i2xh6")
 animation = &"Sleep"
-frame_progress = 0.68317056
+autoplay = "Sleep"

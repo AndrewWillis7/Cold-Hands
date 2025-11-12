@@ -14,7 +14,8 @@ extends CharacterBody3D
 # Character Sprite work
 
 @onready var Head = $Head
-@onready var character_sprite: AnimatedSprite3D = $sprite
+@onready var character_sprite: AnimatedSprite3D = $skinSprite
+@onready var shirt_sprite: AnimatedSprite3D = $shirtSprite
 @onready var shadow = $Shadow
 
 # Footprints
@@ -65,6 +66,7 @@ func render(_delta):
 
 func play_new_anim(animationName: String):
 	character_sprite.play(animationName)
+	shirt_sprite.play(animationName)
 
 func move_character(delta):
 	var input_dir = input_controller.get_move_input()
@@ -89,10 +91,12 @@ func move_character(delta):
 			if input_dir.x > 0:
 				move_state = MoveDirection.RIGHT
 				character_sprite.flip_h = true
+				shirt_sprite.flip_h = true
 				play_new_anim("walkRight")
 			else:
 				move_state = MoveDirection.LEFT
 				character_sprite.flip_h = false
+				shirt_sprite.flip_h = false
 				play_new_anim("walkRight")
 	else:
 		move_state = MoveDirection.IDLE
