@@ -5,6 +5,10 @@ extends Area3D
 
 @onready var label: Label3D = $Label3D
 
+# string can be like (cooking_menu, dialog_menu, card_game_menu, etc...)
+@export var ui_type: String = "none"
+@export var ui_data: Dictionary = {}
+
 signal interacted
 signal player_in_range(interactable: Area3D, text: String)
 signal player_out_of_range(interactable: Area3D)
@@ -31,4 +35,4 @@ func _on_body_exited(body):
 
 func interact():
 	print("Interacted with object: ", name)
-	interacted.emit()
+	interacted.emit(ui_type, ui_data)

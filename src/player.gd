@@ -5,7 +5,7 @@ extends CharacterBody3D
 @export var gravity := 20.0
 
 @export var has_friction := true
-@export var friction_strength := 20.0
+@export var friction_strength := 30.0
 
 @onready var state_machine = $"../PlayerStateMachine"
 @onready var input_controller = preload("res://src/input_abstraction.gd").new()

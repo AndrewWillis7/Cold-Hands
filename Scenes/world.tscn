@@ -1,8 +1,8 @@
 [gd_scene load_steps=7 format=3 uid="uid://bhwl8lyksx737"]
 
-[ext_resource type="PackedScene" uid="uid://bo0pwsa6hw5ue" path="res://scenes/player.tscn" id="1_a02cp"]
-[ext_resource type="PackedScene" uid="uid://byeqdow277rdc" path="res://scenes/dog.tscn" id="3_4wyf3"]
-[ext_resource type="PackedScene" uid="uid://khcp11an7nt6" path="res://scenes/interactable_object.tscn" id="4_k0juu"]
+[ext_resource type="PackedScene" uid="uid://bo0pwsa6hw5ue" path="res://Scenes/player.tscn" id="1_a02cp"]
+[ext_resource type="PackedScene" uid="uid://byeqdow277rdc" path="res://Scenes/dog.tscn" id="3_4wyf3"]
+[ext_resource type="PackedScene" uid="uid://khcp11an7nt6" path="res://Scenes/interactable_object.tscn" id="4_k0juu"]
 [ext_resource type="Texture2D" uid="uid://ccvy42bbwhq5l" path="res://lib/player_sprites/DeadSprite.png" id="5_71j4m"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_71j4m"]
@@ -35,6 +35,7 @@ mesh = SubResource("PlaneMesh_71j4m")
 
 [node name="InteractableObject" parent="." instance=ExtResource("4_k0juu")]
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 10.019127, 0.099999905, -0.101070404)
+ui_type = "dialog_ui"
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.70710677, -0.70710677, 0, 0.70710677, 0.70710677, -9.332367, 0.96091795, 9.233466)

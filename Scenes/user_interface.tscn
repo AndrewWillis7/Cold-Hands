@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://c0cf8gj3w6by7"]
+
+[ext_resource type="Texture2D" uid="uid://defdixatlr1vx" path="res://lib/ui_sprites/DialogBox.png" id="1_62x38"]
+[ext_resource type="Script" uid="uid://2j7vmsayl2id" path="res://src/user_interface.gd" id="1_kvude"]
+[ext_resource type="Script" uid="uid://dnkdkm2vhgi2o" path="res://src/ui_basic.gd" id="3_v7dfl"]
+
+[node name="UserInterface" type="Node2D"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+script = ExtResource("1_kvude")
+
+[node name="DialogBoxPopup" type="Sprite2D" parent="CanvasLayer"]
+scale = Vector2(5, 2.5)
+texture = ExtResource("1_62x38")
+offset = Vector2(130, 200)
+script = ExtResource("3_v7dfl")
+
+[node name="InventoryUI" type="Sprite2D" parent="CanvasLayer"]
+script = ExtResource("3_v7dfl")
+
+[node name="CookingUI" type="Sprite2D" parent="CanvasLayer"]
+script = ExtResource("3_v7dfl")
+
+[node name="WorldUI" type="Sprite2D" parent="CanvasLayer"]
+script = ExtResource("3_v7dfl")
