@@ -1,12 +1,17 @@
-[gd_scene load_steps=6 format=3 uid="uid://bhwl8lyksx737"]
+[gd_scene load_steps=7 format=3 uid="uid://bhwl8lyksx737"]
 
 [ext_resource type="PackedScene" uid="uid://bo0pwsa6hw5ue" path="res://scenes/player.tscn" id="1_a02cp"]
 [ext_resource type="PackedScene" uid="uid://noalk3xvtulg" path="res://scenes/cursor.tscn" id="2_go701"]
 [ext_resource type="PackedScene" uid="uid://byeqdow277rdc" path="res://scenes/dog.tscn" id="3_4wyf3"]
-[ext_resource type="Texture2D" uid="uid://bj4lme15rg5v4" path="res://lib/world_sprites/Snow.png" id="4_k0juu"]
+[ext_resource type="PackedScene" uid="uid://khcp11an7nt6" path="res://scenes/interactable_object.tscn" id="4_k0juu"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_71j4m"]
 size = Vector3(50, 0.2, 50)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_71j4m"]
+size = Vector2(50, 50)
+subdivide_width = 100
+subdivide_depth = 100
 
 [node name="World" type="Node3D"]
 
@@ -21,15 +26,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14.327106, 0)
 shadow_enabled = true
 
 [node name="Dog" parent="." instance=ExtResource("3_4wyf3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 1, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0.12552834, 0)
 
 [node name="Floor" type="StaticBody3D" parent="."]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
 shape = SubResource("BoxShape3D_71j4m")
 
-[node name="Sprite3D" type="Sprite3D" parent="Floor"]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
-pixel_size = 0.1
-texture_filter = 0
-texture = ExtResource("4_k0juu")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+mesh = SubResource("PlaneMesh_71j4m")
+
+[node name="InteractableObject" parent="." instance=ExtResource("4_k0juu")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 10.019127, 0.099999905, -0.101070404)

@@ -1,2 +1,5 @@
+Shader
+ShaderMaterial
+SpriteFrames
 NavigationMesh
 MeshLibrary

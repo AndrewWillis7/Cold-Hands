@@ -2,11 +2,14 @@ extends Camera3D
 
 @export var follow_target: NodePath
 @export var default_offset := Vector3(0, 3, -10)
-@export var aim_offset := Vector3(0, 12, -1) # higher & directly above for top-down
+@export var aim_offset := Vector3(0, 6, -12) # higher & directly above for top-down
 @export var smooth_speed := 10.0
 
 var target: Node3D
 var current_offset := Vector3.ZERO
+
+@onready var snow_shader = $"../SnowVolume/Volume".get_surface_override_material(0)
+@onready var snow_shader_hb = $"../SnowVolume"
 
 @onready var state_machine = $"../../PlayerStateMachine"
 
@@ -31,3 +34,8 @@ func _process(delta: float) -> void:
 
 	# --- Always look at player
 	look_at(target.global_transform.origin, Vector3.UP)
+	
+	# --- Make the snow follow camera and instantiate
+	# var t = Time.get_ticks_msec() / 1000.0
+	# snow_shader.set_shader_parameter("time", t)
+	# snow_shader_hb.global_position = desired_position

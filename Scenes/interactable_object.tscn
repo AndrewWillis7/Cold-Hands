@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://khcp11an7nt6"]
+
+[ext_resource type="Script" uid="uid://15br8oll5mvs" path="res://src/interactable_object.gd" id="1_gknyc"]
+[ext_resource type="FontFile" uid="uid://chge5u0vr77t8" path="res://lib/PrStart.ttf" id="2_1cvqn"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_63ydw"]
+radius = 1.0
+
+[node name="InteractableObject" type="Area3D" groups=["interactables"]]
+script = ExtResource("1_gknyc")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CylinderShape3D_63ydw")
+
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 1, 0)
+texture_filter = 0
+text = "Default"
+font = ExtResource("2_1cvqn")

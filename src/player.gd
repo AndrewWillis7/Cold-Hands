@@ -1,8 +1,7 @@
 # player
 extends CharacterBody3D
 
-@export var speed := 5.0
-@export var jump_force := 8.0
+@export var speed := 4.0
 @export var gravity := 20.0
 
 @export var has_friction := true
@@ -22,7 +21,31 @@ extends CharacterBody3D
 @onready var footprint_scene = preload("res://Scenes/footprints.tscn")
 var last_foot_pos = Vector3.ZERO
 var step_dist = 1.2 # distance before next footprint
+@export var footstep_cooldown := 0.45 # seconds between steps
+var footstep_timer := 0.0
 
+# Sounds
+@onready var audio_stream = $AudioStreamPlayer3D
+var snow_Footstep_sound = preload("res://lib/sounds/SnowCrunch.wav")
+
+# Interactions
+var current_interactable: Area3D = null
+
+func _on_interactable_in_range(interactable, text):
+	current_interactable = interactable
+	print(text)
+
+func _on_interactable_out_of_range(interactable):
+	if current_interactable == interactable:
+		current_interactable = null
+
+# onready
+func _ready() -> void:
+	for interactable in get_tree().get_nodes_in_group("interactables"):
+		interactable.connect("player_in_range", Callable(self, "_on_interactable_in_range"))
+		interactable.connect("player_out_of_range", Callable(self, "_on_interactable_out_of_range"))
+
+# Move System
 enum MoveDirection {
 	IDLE,
 	FORWARD,
@@ -33,6 +56,10 @@ enum MoveDirection {
 var move_state: MoveDirection = MoveDirection.IDLE
 
 func _physics_process(delta: float) -> void:
+	# update timer
+	if footstep_timer > 0.0:
+		footstep_timer = max(0.0, footstep_timer - delta)
+	
 	# Checks for changes in input
 	state_machine.update_state(delta)
 	
@@ -41,28 +68,37 @@ func _physics_process(delta: float) -> void:
 	
 	# Changes the rendering based on movement/input
 	render(delta)
+	
+	if Input.is_action_just_pressed("interact") and current_interactable:
+		current_interactable.interact()
+
+func trigger_footstep():
+	var f = footprint_scene.instantiate()
+	get_parent().add_child(f)
+	f.global_position = Vector3(global_position.x, 0.25, global_position.z)
+	f.rotation_degrees.y = rotation_degrees.y
+
+	# Flip horizontally every other step
+	f.scale.x = 1 if left_foot else -1
+	left_foot = !left_foot
+	last_foot_pos = global_position
+
+	# Play footstep sound if not already playing
+	if not audio_stream.playing:
+		audio_stream.stream = snow_Footstep_sound
+		audio_stream.pitch_scale = randf_range(0.95, 1.05)
+		audio_stream.play()
 
 var left_foot := true
 func render(_delta):
 	# footprint
 	if velocity.length() > 0.1 and is_on_floor():
-		if (global_position - last_foot_pos).length() > step_dist:
-			var f = footprint_scene.instantiate()
-			get_parent().add_child(f)
-			f.global_position = Vector3(global_position.x, 0.25, global_position.z)
-			f.rotation_degrees.y = rotation_degrees.y
-			
-			# Flip horizontally every other step
-			if left_foot:
-				f.scale.x = 1
-			else:
-				f.scale.x = -1
-				
-			left_foot = !left_foot
-			last_foot_pos = global_position
+		if (global_position - last_foot_pos).length() > step_dist and footstep_timer <= 0.0:
+			trigger_footstep()
+			footstep_timer = footstep_cooldown
 	
 	# Head Controls
-	Head.visible = (state_machine.current_combat_state == state_machine.CombatState.AIMING)
+	# Head.visible = (state_machine.current_combat_state == state_machine.CombatState.AIMING)
 
 func play_new_anim(animationName: String):
 	character_sprite.play(animationName)
