@@ -1,15 +1,7 @@
 res://scenes/player.tscn
-res://scenes/enemy.tscn
 res://src/resources/skin_sprite_frames.tres
-res://scenes/world.tscn
 res://src/resources/shirt_sprite_frames.tres
 res://lib/shaders/snowfall.gdshader
-res://src/environment.gd
-res://src/camera.gd
 res://lib/shaders/water.gdshader
-res://lib/shaders/fire.gdshader
-res://src/firecontroller.gd
-res://src/interactable_object.gd
-res://scenes/interactable_object.tscn
 res://src/player.gd
-res://src/CursorManager.gd
+res://scenes/cursor.tscn

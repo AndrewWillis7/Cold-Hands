@@ -1,5 +1,5 @@
-Label3D
 Sprite3D
+Label3D
 AudioStreamPlayer3D
 Label
 CanvasLayer
@@ -12,4 +12,3 @@ Node3D
 AnimatedSprite3D
 CharacterBody3D
 StaticBody3D
-NavigationRegion3D

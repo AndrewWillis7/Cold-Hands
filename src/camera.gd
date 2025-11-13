@@ -2,7 +2,7 @@ extends Camera3D
 
 @export var follow_target: NodePath
 @export var default_offset := Vector3(0, 3, -10)
-@export var aim_offset := Vector3(0, 6, -12) # higher & directly above for top-down
+@export var aim_offset := Vector3(0, 7, -12) # higher & directly above for top-down
 @export var smooth_speed := 10.0
 
 var target: Node3D

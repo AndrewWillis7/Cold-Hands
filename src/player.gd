@@ -12,10 +12,10 @@ extends CharacterBody3D
 
 # Character Sprite work
 
-@onready var Head = $Head
 @onready var character_sprite: AnimatedSprite3D = $skinSprite
 @onready var shirt_sprite: AnimatedSprite3D = $shirtSprite
 @onready var shadow = $Shadow
+@onready var weapon_sprite: Sprite3D = $weaponSprite
 
 # Footprints
 @onready var footprint_scene = preload("res://Scenes/footprints.tscn")
@@ -54,6 +54,7 @@ enum MoveDirection {
 	RIGHT
 }
 var move_state: MoveDirection = MoveDirection.IDLE
+
 
 func _physics_process(delta: float) -> void:
 	# update timer
@@ -95,14 +96,23 @@ func render(_delta):
 	if velocity.length() > 0.1 and is_on_floor():
 		if (global_position - last_foot_pos).length() > step_dist and footstep_timer <= 0.0:
 			trigger_footstep()
-			footstep_timer = footstep_cooldown
+			var foot_scaler := 0.5 if state_machine.current_combat_state == state_machine.CombatState.AIMING else 1.0
+			footstep_timer = footstep_cooldown / foot_scaler
+	
+	# Cursor Controls
+	get_node("../Cursor").attacking = (state_machine.current_combat_state == state_machine.CombatState.AIMING)
 	
 	# Head Controls
 	# Head.visible = (state_machine.current_combat_state == state_machine.CombatState.AIMING)
 
-func play_new_anim(animationName: String):
-	character_sprite.play(animationName)
-	shirt_sprite.play(animationName)
+func play_new_anim(animation_name: String):
+	var anim_speed := 0.5 if state_machine.current_combat_state == state_machine.CombatState.AIMING else 1.0
+	character_sprite.speed_scale = anim_speed
+	shirt_sprite.speed_scale = anim_speed
+	
+	character_sprite.play(animation_name)
+	shirt_sprite.play(animation_name)
+
 
 func move_character(delta):
 	var input_dir = input_controller.get_move_input()
@@ -112,31 +122,41 @@ func move_character(delta):
 	
 	if direction != Vector3.ZERO:
 		# Character is moving
-		velocity.x = direction.x * speed
-		velocity.z = direction.z * speed
+		var realSpeed = speed if state_machine.current_combat_state != state_machine.CombatState.AIMING else speed / 2; 
+		velocity.x = direction.x * realSpeed
+		velocity.z = direction.z * realSpeed
 		
 				# Determine move direction for animation
 		if abs(input_dir.y) > abs(input_dir.x):
 			if input_dir.y > 0:
 				move_state = MoveDirection.FORWARD
 				play_new_anim("walkForward")
+				weapon_sprite.position.z = 0.1
+				weapon_sprite.position.y = 1.5
 			else:
 				move_state = MoveDirection.BACKWARD
 				play_new_anim("walkBackward")
+				weapon_sprite.position.z = -0.1
+				weapon_sprite.position.y = 1.5
 		else:
 			if input_dir.x > 0:
 				move_state = MoveDirection.RIGHT
 				character_sprite.flip_h = true
 				shirt_sprite.flip_h = true
+				weapon_sprite.position.y = -50
 				play_new_anim("walkRight")
 			else:
 				move_state = MoveDirection.LEFT
 				character_sprite.flip_h = false
 				shirt_sprite.flip_h = false
+				weapon_sprite.position.y = -50
+
 				play_new_anim("walkRight")
 	else:
 		move_state = MoveDirection.IDLE
 		play_new_anim("standForward")
+		weapon_sprite.position.z = 0.1
+		weapon_sprite.position.y = 1.5
 		
 		if has_friction:
 			# quick deceleration for snapped stop

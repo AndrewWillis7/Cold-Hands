@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://l7ctrobglhcy"
-path="res://.godot/imported/TopHead.png-f306e10c15b956779979f13940b39016.ctex"
+uid="uid://dykmui58ijx4b"
+path="res://.godot/imported/Shotgun_64.png-9957a34ec5bb36d93222b2dfb4d8c62b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://lib/player_sprites/TopHead.png"
-dest_files=["res://.godot/imported/TopHead.png-f306e10c15b956779979f13940b39016.ctex"]
+source_file="res://lib/weapon_sprites/Shotgun_64.png"
+dest_files=["res://.godot/imported/Shotgun_64.png-9957a34ec5bb36d93222b2dfb4d8c62b.ctex"]
 
 [params]
 

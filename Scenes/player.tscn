@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bo0pwsa6hw5ue"]
+[gd_scene load_steps=13 format=3 uid="uid://bo0pwsa6hw5ue"]
 
 [ext_resource type="Script" uid="uid://cviergfygvp8s" path="res://src/player.gd" id="1_cvnsp"]
 [ext_resource type="Script" uid="uid://4hr66rqthv2f" path="res://src/playerStateMachine.gd" id="1_v0iea"]
@@ -6,8 +6,9 @@
 [ext_resource type="SpriteFrames" uid="uid://cwn2kaakqcbox" path="res://src/resources/skin_sprite_frames.tres" id="3_fjrip"]
 [ext_resource type="Texture2D" uid="uid://bufc4tkwoposn" path="res://lib/player_sprites/Shadow.png" id="4_tuyoq"]
 [ext_resource type="SpriteFrames" uid="uid://b01jn2hn4t6x0" path="res://src/resources/shirt_sprite_frames.tres" id="5_fjrip"]
-[ext_resource type="Texture2D" uid="uid://l7ctrobglhcy" path="res://lib/player_sprites/TopHead.png" id="5_qlg0r"]
+[ext_resource type="Texture2D" uid="uid://cx06diasvwu74" path="res://lib/weapon_sprites/Shotgun.png" id="5_smehm"]
 [ext_resource type="Shader" uid="uid://dei5an5jd1qxu" path="res://lib/shaders/snowfall.gdshader" id="8_smehm"]
+[ext_resource type="PackedScene" uid="uid://noalk3xvtulg" path="res://scenes/cursor.tscn" id="9_ur7pv"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_cvnsp"]
 
@@ -32,13 +33,6 @@ script = ExtResource("1_cvnsp")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_cvnsp")
-
-[node name="Head" type="Sprite3D" parent="CharacterBody3D"]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 2, 0)
-visible = false
-pixel_size = 0.1
-texture_filter = 0
-texture = ExtResource("5_qlg0r")
 
 [node name="skinSprite" type="AnimatedSprite3D" parent="CharacterBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0)
@@ -67,6 +61,12 @@ animation = &"standBackward"
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="CharacterBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 
+[node name="weaponSprite" type="Sprite3D" parent="CharacterBody3D"]
+transform = Transform3D(0.70710677, 0.70710677, 0, -0.70710677, 0.70710677, 0, 0, 0, 1, 0, 1.5, 0.1)
+pixel_size = 0.1
+texture_filter = 0
+texture = ExtResource("5_smehm")
+
 [node name="Grounded" type="RayCast3D" parent="."]
 
 [node name="PlayerStateMachine" type="Node" parent="."]
@@ -91,3 +91,5 @@ surface_material_override/0 = SubResource("ShaderMaterial_y4r1p")
 [node name="Label" type="Label" parent="PlayerDrivenUI"]
 offset_right = 40.0
 offset_bottom = 23.0
+
+[node name="Cursor" parent="." instance=ExtResource("9_ur7pv")]
