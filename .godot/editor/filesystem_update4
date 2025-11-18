@@ -1,7 +1,15 @@
-res://scenes/player.tscn
+res://scenes/user_interface.tscn
 res://src/resources/skin_sprite_frames.tres
 res://src/resources/shirt_sprite_frames.tres
 res://lib/shaders/snowfall.gdshader
 res://lib/shaders/water.gdshader
-res://src/player.gd
+res://scenes/world.tscn
+res://src/item.gd
 res://scenes/cursor.tscn
+res://src/resources/item.tres
+res://src/resources/item.gd
+res://scenes/player.tscn
+res://src/interfaces/inventory_data.gd
+res://src/ui_basic.gd
+res://src/interfaces/user_interface.gd
+res://src/interfaces/inventory_ui.gd

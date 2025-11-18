@@ -1,3 +1,4 @@
+Resource
 Shader
 ShaderMaterial
 SpriteFrames

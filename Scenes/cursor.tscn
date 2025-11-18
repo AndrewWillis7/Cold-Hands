@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://noalk3xvtulg"]
 
-[ext_resource type="Script" uid="uid://bwmlraoksgjrj" path="res://src/CursorManager.gd" id="1_8pp82"]
+[ext_resource type="Script" uid="uid://bwmlraoksgjrj" path="res://src/cursor_manager.gd" id="1_8pp82"]
 [ext_resource type="Texture2D" uid="uid://brgiovaxqtf87" path="res://lib/player_sprites/DefaultCursorSpritesheet.png" id="2_i7fis"]
 [ext_resource type="Texture2D" uid="uid://m3vp7g1t42l5" path="res://lib/player_sprites/ReticleSprite.png" id="3_hxgmc"]
 

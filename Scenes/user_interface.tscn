@@ -1,8 +1,22 @@
-[gd_scene load_steps=4 format=3 uid="uid://c0cf8gj3w6by7"]
+[gd_scene load_steps=9 format=3 uid="uid://c0cf8gj3w6by7"]
 
 [ext_resource type="Texture2D" uid="uid://defdixatlr1vx" path="res://lib/ui_sprites/DialogBox.png" id="1_62x38"]
-[ext_resource type="Script" uid="uid://2j7vmsayl2id" path="res://src/user_interface.gd" id="1_kvude"]
-[ext_resource type="Script" uid="uid://dnkdkm2vhgi2o" path="res://src/ui_basic.gd" id="3_v7dfl"]
+[ext_resource type="Script" uid="uid://2j7vmsayl2id" path="res://src/interfaces/user_interface.gd" id="1_kvude"]
+[ext_resource type="Script" uid="uid://dnkdkm2vhgi2o" path="res://src/interfaces/ui_basic.gd" id="3_v7dfl"]
+[ext_resource type="FontFile" uid="uid://chge5u0vr77t8" path="res://lib/PrStart.ttf" id="4_jbsfc"]
+[ext_resource type="Script" uid="uid://buko1abtuw2k1" path="res://src/interfaces/inventory_ui.gd" id="6_lmgon"]
+[ext_resource type="Script" uid="uid://bweo57oyl18ar" path="res://src/interfaces/inventory_data.gd" id="6_xsrv6"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_cufge"]
+line_spacing = 2.0
+font = ExtResource("4_jbsfc")
+font_size = 8
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Resource" id="Resource_sdud1"]
+script = ExtResource("6_xsrv6")
+metadata/_custom_type_script = "uid://bweo57oyl18ar"
 
 [node name="UserInterface" type="Node2D"]
 
@@ -10,16 +24,44 @@
 script = ExtResource("1_kvude")
 
 [node name="DialogBoxPopup" type="Sprite2D" parent="CanvasLayer"]
+visible = false
 scale = Vector2(5, 2.5)
 texture = ExtResource("1_62x38")
 offset = Vector2(130, 200)
 script = ExtResource("3_v7dfl")
 
-[node name="InventoryUI" type="Sprite2D" parent="CanvasLayer"]
-script = ExtResource("3_v7dfl")
+[node name="Label" type="Label" parent="CanvasLayer/DialogBoxPopup"]
+offset_left = 66.8
+offset_top = 166.79999
+offset_right = 193.19998
+offset_bottom = 231.6
+text = "Default Text that wraps! "
+label_settings = SubResource("LabelSettings_cufge")
+autowrap_mode = 3
 
 [node name="CookingUI" type="Sprite2D" parent="CanvasLayer"]
+visible = false
 script = ExtResource("3_v7dfl")
 
 [node name="WorldUI" type="Sprite2D" parent="CanvasLayer"]
+visible = false
 script = ExtResource("3_v7dfl")
+
+[node name="InventoryUI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("6_lmgon")
+inventory_data = SubResource("Resource_sdud1")
+
+[node name="GridContainer" type="GridContainer" parent="InventoryUI"]
+layout_mode = 0
+offset_left = 552.0
+offset_top = 324.0
+offset_right = 592.0
+offset_bottom = 364.0
+
+[node name="DragPreviewSprite" type="Sprite2D" parent="InventoryUI"]
+position = Vector2(553, 324)
+scale = Vector2(6.080001, 9.673752)

@@ -1,7 +1,7 @@
 extends CanvasLayer
 
 @onready var cooking_ui = $CookingUI
-@onready var inventory_ui = $InventoryUI
+@onready var inventory_ui = $"../InventoryUI"
 @onready var dialog_ui = $DialogBoxPopup
 @onready var world_ui = $WorldUI
 
@@ -35,15 +35,13 @@ func open_contextual_ui(ui_type: String, ui_data: Dictionary):
 		_:
 			print("Unkown UI type:", ui_type)
 
-
-
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	hide_all_scene_nodes()
 	for interactable in get_tree().get_nodes_in_group("interactables"):
 		interactable.connect("interacted", Callable(self, "open_contextual_ui"))
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+func _process(_delta: float) -> void:
+	if Input.is_action_just_pressed("open_inventory"):
+		print("Open Inventory")
+		inventory_ui.visible = !inventory_ui.visible
