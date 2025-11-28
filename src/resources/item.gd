@@ -6,5 +6,8 @@ class_name ItemResource
 @export var size_x := 1
 @export var size_y := 1
 
+@export var max_stack_size: int = 1
+var stack_size: int = 1
+
 @export var item_type := "default"
 @export var item_id := 0

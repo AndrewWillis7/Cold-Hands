@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ItemResource" load_steps=3 format=3 uid="uid://btiwdahn68jba"]
+
+[ext_resource type="Script" uid="uid://brgwvh0gybyb8" path="res://src/resources/item.gd" id="1_48y84"]
+[ext_resource type="Texture2D" uid="uid://ccvy42bbwhq5l" path="res://lib/player_sprites/DeadSprite.png" id="1_byeg2"]
+
+[resource]
+script = ExtResource("1_48y84")
+icon = ExtResource("1_byeg2")
+max_stack_size = 99
+item_type = "currency"
+metadata/_custom_type_script = "uid://brgwvh0gybyb8"

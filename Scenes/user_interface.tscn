@@ -56,6 +56,7 @@ visible = false
 script = ExtResource("3_v7dfl")
 
 [node name="InventoryUI" type="Control" parent="."]
+visible = false
 layout_direction = 1
 layout_mode = 1
 anchors_preset = 15
@@ -90,3 +91,15 @@ grow_vertical = 2
 mouse_filter = 2
 
 [node name="DragPreviewSprite" type="Sprite2D" parent="InventoryUI"]
+
+[node name="AutosortButton" type="Button" parent="InventoryUI"]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+text = "AutoSort"
+
+[node name="ControllerCursor" type="Panel" parent="InventoryUI"]
+visible = false
+layout_mode = 0
+offset_right = 48.0
+offset_bottom = 48.0

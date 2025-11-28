@@ -42,9 +42,11 @@ func place(item: ItemResource, row: int, col: int, rot: bool) -> void:
 
 	for y in range(h):
 		for x in range(w):
+			var is_origin := (y == 0 and x == 0)
+
 			grid[row + y][col + x] = {
 				"item": item,
-				"origin": y == 0 and x == 0,
+				"origin": is_origin,
 				"rotated": rot
 			}
 
@@ -52,10 +54,9 @@ func place(item: ItemResource, row: int, col: int, rot: bool) -> void:
 func clear_item(item: ItemResource) -> void:
 	for y in range(rows):
 		for x in range(cols):
-			var cell = grid[y][x]
-			if cell != null and cell["item"] == item:
+			var cd = grid[y][x]
+			if cd != null and cd["item"] == item:
 				grid[y][x] = null
-
 
 func force_place_for_testing(item: ItemResource) -> void:
 	if can_place(item, 0, 0, false):

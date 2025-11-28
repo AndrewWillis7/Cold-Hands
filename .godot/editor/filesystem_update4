@@ -10,3 +10,8 @@ res://scenes/world.tscn
 res://scenes/cursor.tscn
 res://src/interfaces/inventory_data.gd
 res://lib/items/test_gun.tres
+res://src/interactable_object.gd
+res://scenes/dog.tscn
+res://src/resources/item.gd
+res://lib/items/money.tres
+res://scenes/player.tscn

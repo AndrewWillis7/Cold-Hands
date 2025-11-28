@@ -3,6 +3,9 @@ extends Area3D
 @export var prompt_text := "Press E to Interact"
 @export var interaction_action := "interact"
 
+@export var IS_PICKUP := false
+@export var item_to_pickup: ItemResource
+
 @onready var label: Label3D = $Label3D
 
 # string can be like (cooking_menu, dialog_menu, card_game_menu, etc...)
@@ -10,6 +13,7 @@ extends Area3D
 @export var ui_data: Dictionary = {}
 
 signal interacted
+signal request_add_to_inventory(item)
 signal player_in_range(interactable: Area3D, text: String)
 signal player_out_of_range(interactable: Area3D)
 
@@ -34,5 +38,10 @@ func _on_body_exited(body):
 		player_out_of_range.emit(self)
 
 func interact():
-	print("Interacted with object: ", name)
-	interacted.emit(ui_type, ui_data)
+	if not IS_PICKUP:
+		print("Interacted with object: ", name)
+		interacted.emit(ui_type, ui_data)
+		
+	if IS_PICKUP and (item_to_pickup != null):
+		emit_signal("request_add_to_inventory", item_to_pickup)
+		print("Attempt to Pickup item")

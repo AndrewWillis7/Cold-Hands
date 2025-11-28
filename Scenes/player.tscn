@@ -94,5 +94,6 @@ offset_right = 40.0
 offset_bottom = 23.0
 
 [node name="Cursor" parent="." instance=ExtResource("9_ur7pv")]
+z_index = 100
 
 [node name="UserInterface" parent="." instance=ExtResource("10_tx1dd")]

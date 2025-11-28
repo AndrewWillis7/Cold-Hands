@@ -43,5 +43,6 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("open_inventory"):
-		print("Open Inventory")
+		hide_all_scene_nodes()
+		print("toggled Inventory")
 		inventory_ui.visible = !inventory_ui.visible
