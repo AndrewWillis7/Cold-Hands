@@ -1,13 +1,18 @@
-[gd_scene load_steps=4 format=3 uid="uid://cohiqpndtgam"]
+[gd_scene load_steps=6 format=3 uid="uid://cohiqpndtgam"]
 
+[ext_resource type="Script" uid="uid://cmlaiqdl2ksfc" path="res://src/enemies/basic_enemy.gd" id="1_4ra3w"]
 [ext_resource type="SpriteFrames" uid="uid://cwn2kaakqcbox" path="res://src/resources/skin_sprite_frames.tres" id="1_7p1mj"]
 [ext_resource type="SpriteFrames" uid="uid://b01jn2hn4t6x0" path="res://src/resources/shirt_sprite_frames.tres" id="2_md0e3"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_8tegq"]
 
-[node name="Enemy" type="Node3D"]
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_5uy6h"]
+radius = 10.0
 
-[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
+[node name="Enemy" type="Node3D" groups=["enemy"]]
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="." groups=["enemy"]]
+script = ExtResource("1_4ra3w")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -15,6 +20,7 @@ shape = SubResource("CapsuleShape3D_8tegq")
 
 [node name="skinSprite" type="AnimatedSprite3D" parent="CharacterBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0)
+modulate = Color(0.99999875, 0.6317553, 0.46826363, 1)
 pixel_size = 0.1
 texture_filter = 0
 sprite_frames = ExtResource("1_7p1mj")
@@ -22,7 +28,15 @@ animation = &"standForward"
 
 [node name="shirtSprite" type="AnimatedSprite3D" parent="CharacterBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, -0.01)
+modulate = Color(0.1584723, 0.15847233, 0.1584723, 1)
 pixel_size = 0.1
 texture_filter = 0
 sprite_frames = ExtResource("2_md0e3")
 animation = &"standForward"
+
+[node name="DangerZone" type="Area3D" parent="CharacterBody3D" groups=["enemy"]]
+collision_layer = 129
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D/DangerZone"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CylinderShape3D_5uy6h")

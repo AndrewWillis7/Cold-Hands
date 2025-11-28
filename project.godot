@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 player="This holds all the player nodes"
 interactables=""
+enemy="This is where we put the enemies"
 
 [importer_defaults]
 

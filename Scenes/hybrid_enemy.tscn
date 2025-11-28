@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://c76akycs161an"]
+
+[ext_resource type="PackedScene" uid="uid://cohiqpndtgam" path="res://scenes/base_enemy.tscn" id="1_128qd"]
+[ext_resource type="Script" uid="uid://hhvfsy8wa87j" path="res://src/enemies/hybrid_enemy.gd" id="2_kgan8"]
+
+[node name="Enemy" instance=ExtResource("1_128qd")]
+
+[node name="CharacterBody3D" parent="." index="0"]
+script = ExtResource("2_kgan8")
+aggressive_speed = 6.0

@@ -1,3 +1,5 @@
+res://scenes
+res://src/enemies
 res://lib/items
 res://lib/ui_sprites
 res://src/resources
@@ -5,7 +7,6 @@ res://lib
 res://lib/shaders
 res://lib/player_sprites
 res://lib/world_sprites
-res://scenes
 res://lib/dog_sprites/default_dog
 res://src
 res://Scenes

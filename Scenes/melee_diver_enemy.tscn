@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://bc2nk41fer8qw"]
+
+[ext_resource type="PackedScene" uid="uid://cohiqpndtgam" path="res://scenes/base_enemy.tscn" id="1_8ryao"]
+[ext_resource type="Script" uid="uid://d1sfmpbom72vg" path="res://src/enemies/melee_diver_enemy.gd" id="2_bnprf"]
+
+[node name="Enemy" instance=ExtResource("1_8ryao")]
+
+[node name="CharacterBody3D" parent="." index="0"]
+script = ExtResource("2_bnprf")
+dash_speed = 8.0
+retreat_after_attack = 3.0
+retreat_speed = 4.0

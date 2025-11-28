@@ -17,6 +17,10 @@ extends CharacterBody3D
 @onready var shadow = $Shadow
 @onready var weapon_sprite: Sprite3D = $weaponSprite
 
+# Combat
+@onready var danger_zone: Area3D = $DangerZone
+var enemies_in_range: int = 0
+
 # Footprints
 @onready var footprint_scene = preload("res://Scenes/footprints.tscn")
 var last_foot_pos = Vector3.ZERO
@@ -31,6 +35,10 @@ var snow_Footstep_sound = preload("res://lib/sounds/SnowCrunch.wav")
 # Interactions
 var current_interactable: Area3D = null
 
+# Signals
+signal combat_ready
+signal combat_over
+
 func _on_interactable_in_range(interactable, text):
 	current_interactable = interactable
 	print(text)
@@ -41,6 +49,9 @@ func _on_interactable_out_of_range(interactable):
 
 # onready
 func _ready() -> void:
+	danger_zone.body_entered.connect(_on_danger_zone_entered)
+	danger_zone.body_exited.connect(_on_danger_zone_exited)
+
 	for interactable in get_tree().get_nodes_in_group("interactables"):
 		interactable.connect("player_in_range", Callable(self, "_on_interactable_in_range"))
 		interactable.connect("player_out_of_range", Callable(self, "_on_interactable_out_of_range"))
@@ -177,3 +188,24 @@ func move_character(delta):
 	#print(MoveDirection.keys()[move_state])
 	
 	move_and_slide()
+
+# Combat Stuff 
+func _on_danger_zone_entered(body):
+	if body.is_in_group("enemy"):
+		enemies_in_range += 1
+
+		# First enemy entering starts combat
+		if enemies_in_range == 1:
+			emit_signal("combat_ready")
+			# Optional: notify your state machine
+			state_machine.enter_combat_mode()
+
+
+func _on_danger_zone_exited(body):
+	if body.is_in_group("enemy"):
+		enemies_in_range = max(0, enemies_in_range - 1)
+
+		# If all enemies are gone, end combat
+		if enemies_in_range == 0:
+			emit_signal("combat_over")
+			state_machine.exit_combat_mode()

@@ -1,3 +1,5 @@
+CollisionShape3D
+Area3D
 Panel
 Button
 Sprite2D
@@ -10,6 +12,3 @@ Sprite3D
 Label3D
 AudioStreamPlayer3D
 Label
-CanvasLayer
-CollisionShape3D
-Area3D

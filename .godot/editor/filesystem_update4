@@ -15,3 +15,13 @@ res://scenes/dog.tscn
 res://src/resources/item.gd
 res://lib/items/money.tres
 res://scenes/player.tscn
+res://src/player.gd
+res://src/player_state_machine.gd
+res://src/camera.gd
+res://scenes/enemy.tscn
+res://src/enemy.gd
+res://src/enemies/basic_enemy.gd
+res://src/enemies/long_range_enemy.gd
+res://src/enemies/melee_diver_enemy.gd
+res://src/enemies/hybrid_enemy.gd
+res://scenes/hybrid_enemy.tscn

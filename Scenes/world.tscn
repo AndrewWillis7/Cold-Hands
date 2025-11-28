@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bhwl8lyksx737"]
+[gd_scene load_steps=11 format=3 uid="uid://bhwl8lyksx737"]
 
 [ext_resource type="PackedScene" uid="uid://bo0pwsa6hw5ue" path="res://scenes/player.tscn" id="1_a02cp"]
 [ext_resource type="PackedScene" uid="uid://byeqdow277rdc" path="res://scenes/dog.tscn" id="3_4wyf3"]
@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://ccvy42bbwhq5l" path="res://lib/player_sprites/DeadSprite.png" id="5_71j4m"]
 [ext_resource type="Resource" uid="uid://btiwdahn68jba" path="res://lib/items/money.tres" id="5_qfnet"]
 [ext_resource type="Resource" uid="uid://doos0pshm1w62" path="res://lib/items/test_gun.tres" id="6_qfnet"]
+[ext_resource type="PackedScene" uid="uid://bc2nk41fer8qw" path="res://scenes/melee_diver_enemy.tscn" id="7_4mrxx"]
+[ext_resource type="PackedScene" uid="uid://cr8l52usbfpjb" path="res://scenes/long_range_enemy.tscn" id="8_7r4gi"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_71j4m"]
 size = Vector3(50, 0.2, 50)
@@ -62,3 +64,9 @@ transform = Transform3D(3, 0, 0, 0, -1.3113416e-07, 2.9999998, 0, -2.9999998, -1
 prompt_text = "Press E to Pick up Item"
 IS_PICKUP = true
 item_to_pickup = ExtResource("6_qfnet")
+
+[node name="Enemy" parent="." instance=ExtResource("7_4mrxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.681292, 2.0500004, 20.564533)
+
+[node name="Enemy2" parent="." instance=ExtResource("8_7r4gi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.4747057, 2.0500004, 21.103512)
