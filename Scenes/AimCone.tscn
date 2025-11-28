@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://c4e6pvtba8gb8"]
+
+[ext_resource type="Script" uid="uid://qf374wsyct23" path="res://src/AimCone.gd" id="1_aw7pg"]
+[ext_resource type="Shader" uid="uid://xnul2rn51t7y" path="res://lib/shaders/AimConeGrad.gdshader" id="2_gtp2x"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_f783a"]
+render_priority = 0
+shader = ExtResource("2_gtp2x")
+shader_parameter/inner_color = Color(0.277978, 0.27658883, 0.28277525, 1)
+shader_parameter/outer_color = Color(1, 0.4, 0.1, 0)
+shader_parameter/outline_color = Color(0, 0, 0, 1)
+shader_parameter/radial_steps = 5.0
+shader_parameter/outline_width = 0.18
+
+[node name="AimCone" type="Node3D"]
+script = ExtResource("1_aw7pg")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = SubResource("ShaderMaterial_f783a")

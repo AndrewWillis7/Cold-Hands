@@ -25,3 +25,12 @@ res://src/enemies/long_range_enemy.gd
 res://src/enemies/melee_diver_enemy.gd
 res://src/enemies/hybrid_enemy.gd
 res://scenes/hybrid_enemy.tscn
+res://scenes/base_enemy.tscn
+res://scenes/long_range_enemy.tscn
+res://scenes/AimCone.tscn
+res://src/AimCone.gd
+res://lib/shaders/AimConeGrad.gdshader
+res://lib/shaders/night_sky.gdshader
+res://lib/shaders/fire.gdshader
+res://lib/shaders/god_ray.gdshader
+res://scenes/environment.tscn

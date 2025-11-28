@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bhwl8lyksx737"]
+[gd_scene load_steps=15 format=3 uid="uid://bhwl8lyksx737"]
 
 [ext_resource type="PackedScene" uid="uid://bo0pwsa6hw5ue" path="res://scenes/player.tscn" id="1_a02cp"]
 [ext_resource type="PackedScene" uid="uid://byeqdow277rdc" path="res://scenes/dog.tscn" id="3_4wyf3"]
@@ -8,14 +8,35 @@
 [ext_resource type="Resource" uid="uid://doos0pshm1w62" path="res://lib/items/test_gun.tres" id="6_qfnet"]
 [ext_resource type="PackedScene" uid="uid://bc2nk41fer8qw" path="res://scenes/melee_diver_enemy.tscn" id="7_4mrxx"]
 [ext_resource type="PackedScene" uid="uid://cr8l52usbfpjb" path="res://scenes/long_range_enemy.tscn" id="8_7r4gi"]
+[ext_resource type="PackedScene" uid="uid://c76akycs161an" path="res://scenes/hybrid_enemy.tscn" id="9_7r4gi"]
+[ext_resource type="Shader" uid="uid://bidokee1xos07" path="res://lib/shaders/fire.gdshader" id="10_w7kh3"]
+[ext_resource type="PackedScene" uid="uid://cr8o3yllqe75" path="res://scenes/environment.tscn" id="11_e3hyu"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_71j4m"]
-size = Vector3(50, 0.2, 50)
+size = Vector3(100, 0.2, 100)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_71j4m"]
-size = Vector2(50, 50)
+size = Vector2(100, 100)
 subdivide_width = 100
 subdivide_depth = 100
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e3hyu"]
+shader = ExtResource("10_w7kh3")
+shader_parameter/debug = false
+shader_parameter/pallet_size = 0
+shader_parameter/mask_color = Color(0, 0, 0, 1)
+shader_parameter/bg_color = Color(0, 0, 0, 1)
+shader_parameter/flame_0 = Color(0, 0, 0, 1)
+shader_parameter/flame_1 = Color(0, 0, 0, 1)
+shader_parameter/flame_2 = Color(0, 0, 0, 1)
+shader_parameter/flame_3 = Color(0, 0, 0, 1)
+shader_parameter/flame_4 = Color(0, 0, 0, 1)
+shader_parameter/scroll_speed = 0.0
+shader_parameter/thresh_f0 = 0.0
+shader_parameter/thresh_f1 = 0.0
+shader_parameter/thresh_f2 = 0.0
+shader_parameter/thresh_f3 = 0.0
+shader_parameter/thresh_f4 = 0.0
 
 [node name="World" type="Node3D"]
 
@@ -34,11 +55,17 @@ transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0.019126892, -0.025528431, -0
 ui_type = "dialog_ui"
 
 [node name="Floor" type="StaticBody3D" parent="."]
+collision_layer = 255
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
 shape = SubResource("BoxShape3D_71j4m")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+mesh = SubResource("PlaneMesh_71j4m")
+
+[node name="SubSurfaceWater" type="MeshInstance3D" parent="Floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10, 0)
+visible = false
 mesh = SubResource("PlaneMesh_71j4m")
 
 [node name="Body" type="Sprite3D" parent="."]
@@ -65,8 +92,22 @@ prompt_text = "Press E to Pick up Item"
 IS_PICKUP = true
 item_to_pickup = ExtResource("6_qfnet")
 
-[node name="Enemy" parent="." instance=ExtResource("7_4mrxx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.681292, 2.0500004, 20.564533)
+[node name="Enemy" parent="." groups=["enemy"] instance=ExtResource("7_4mrxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.807165, -0.003734827, 33.914253)
 
-[node name="Enemy2" parent="." instance=ExtResource("8_7r4gi")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.4747057, 2.0500004, 21.103512)
+[node name="Enemy2" parent="." groups=["enemy"] instance=ExtResource("8_7r4gi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.600576, -0.003734827, 34.45323)
+
+[node name="Enemy3" parent="." groups=["enemy"] instance=ExtResource("9_7r4gi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.029821, -0.003734827, 19.886204)
+
+[node name="Fire" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8.9088745)
+
+[node name="Sprite3D" type="Sprite3D" parent="Fire"]
+material_override = SubResource("ShaderMaterial_e3hyu")
+pixel_size = 0.1
+texture_filter = 0
+
+[node name="Environment" parent="." instance=ExtResource("11_e3hyu")]
+visible = false

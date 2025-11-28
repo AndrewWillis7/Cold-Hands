@@ -8,3 +8,7 @@
 [node name="CharacterBody3D" parent="." index="0"]
 script = ExtResource("2_kgan8")
 aggressive_speed = 6.0
+min_combat_distance = 2.5
+max_attack_distance = 6.0
+attack_range = 6.0
+attack_cooldown = 0.8

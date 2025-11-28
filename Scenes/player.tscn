@@ -1,12 +1,14 @@
-[gd_scene load_steps=15 format=3 uid="uid://bo0pwsa6hw5ue"]
+[gd_scene load_steps=19 format=3 uid="uid://bo0pwsa6hw5ue"]
 
 [ext_resource type="Script" uid="uid://cviergfygvp8s" path="res://src/player.gd" id="1_cvnsp"]
 [ext_resource type="Script" uid="uid://4hr66rqthv2f" path="res://src/player_state_machine.gd" id="1_v0iea"]
+[ext_resource type="PackedScene" uid="uid://c4e6pvtba8gb8" path="res://scenes/AimCone.tscn" id="2_d2wvv"]
 [ext_resource type="Script" uid="uid://h5ryvusbe7n5" path="res://src/camera.gd" id="3_6t5aa"]
 [ext_resource type="SpriteFrames" uid="uid://cwn2kaakqcbox" path="res://src/resources/skin_sprite_frames.tres" id="3_fjrip"]
 [ext_resource type="Texture2D" uid="uid://bufc4tkwoposn" path="res://lib/player_sprites/Shadow.png" id="4_tuyoq"]
 [ext_resource type="SpriteFrames" uid="uid://b01jn2hn4t6x0" path="res://src/resources/shirt_sprite_frames.tres" id="5_fjrip"]
 [ext_resource type="Texture2D" uid="uid://cx06diasvwu74" path="res://lib/weapon_sprites/Shotgun.png" id="5_smehm"]
+[ext_resource type="Shader" uid="uid://owgp7nodspow" path="res://lib/shaders/night_sky.gdshader" id="7_3v2ag"]
 [ext_resource type="Shader" uid="uid://dei5an5jd1qxu" path="res://lib/shaders/snowfall.gdshader" id="8_smehm"]
 [ext_resource type="PackedScene" uid="uid://noalk3xvtulg" path="res://scenes/cursor.tscn" id="9_ur7pv"]
 [ext_resource type="PackedScene" uid="uid://c0cf8gj3w6by7" path="res://scenes/user_interface.tscn" id="10_tx1dd"]
@@ -15,6 +17,27 @@
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_y4r1p"]
 radius = 15.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jej6c"]
+render_priority = 0
+shader = ExtResource("7_3v2ag")
+shader_parameter/background_color = Color(0.02, 0.04, 0.12, 1)
+shader_parameter/aspect_ratio = 1.0
+shader_parameter/density = 0.9999999747
+shader_parameter/layer_parascale = 5
+shader_parameter/star_speed = Vector2(0, 0)
+shader_parameter/star_wave = Vector2(0.1, 0.1)
+shader_parameter/star_size = 1.499999966472
+shader_parameter/star_rotate_speed = 0.5
+shader_parameter/twinkle_effect = 0.6
+shader_parameter/twinkle_speed = 0.3
+shader_parameter/pixelate_enabled = true
+shader_parameter/pixelate_count = 1000.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_f1ej7"]
+lightmap_size_hint = Vector2i(7, 7)
+flip_faces = true
+size = Vector2(1000, 1000)
 
 [sub_resource type="BoxMesh" id="BoxMesh_ur7pv"]
 size = Vector3(100, 100, 100)
@@ -33,6 +56,9 @@ shader_parameter/ground_height = 0.0
 
 [node name="CharacterBody3D" type="CharacterBody3D" parent="." groups=["player"]]
 script = ExtResource("1_cvnsp")
+aim_assist_strength = 0.75
+
+[node name="AimCone" parent="CharacterBody3D" instance=ExtResource("2_d2wvv")]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -76,6 +102,12 @@ texture = ExtResource("5_smehm")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D/DangerZone"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CylinderShape3D_y4r1p")
+
+[node name="Sky" type="MeshInstance3D" parent="CharacterBody3D"]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 0, 100)
+visible = false
+material_override = SubResource("ShaderMaterial_jej6c")
+mesh = SubResource("QuadMesh_f1ej7")
 
 [node name="Grounded" type="RayCast3D" parent="."]
 

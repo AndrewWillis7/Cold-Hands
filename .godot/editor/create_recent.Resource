@@ -1,7 +1,7 @@
+Shader
 ItemResource
 CanvasTexture
 Resource
-Shader
 ShaderMaterial
 SpriteFrames
 NavigationMesh

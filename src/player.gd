@@ -7,6 +7,11 @@ extends CharacterBody3D
 @export var has_friction := true
 @export var friction_strength := 30.0
 
+@export var aim_assist_strength := 0.5
+var cone_aim_dir := Vector3.FORWARD  # smooth rotation direction
+@export var aim_smoothness := 15.0   # higher = faster rotation
+
+
 @onready var state_machine = $"../PlayerStateMachine"
 @onready var input_controller = preload("res://src/input_abstraction.gd").new()
 
@@ -52,6 +57,8 @@ func _ready() -> void:
 	danger_zone.body_entered.connect(_on_danger_zone_entered)
 	danger_zone.body_exited.connect(_on_danger_zone_exited)
 
+	$Sky.visible = true
+
 	for interactable in get_tree().get_nodes_in_group("interactables"):
 		interactable.connect("player_in_range", Callable(self, "_on_interactable_in_range"))
 		interactable.connect("player_out_of_range", Callable(self, "_on_interactable_out_of_range"))
@@ -83,6 +90,9 @@ func _physics_process(delta: float) -> void:
 	
 	if Input.is_action_just_pressed("interact") and current_interactable:
 		current_interactable.interact()
+		
+	if Input.is_action_just_pressed("shoot") and (state_machine.current_combat_state != state_machine.CombatState.NONE):
+		shoot()
 
 func trigger_footstep():
 	var f = footprint_scene.instantiate()
@@ -113,8 +123,7 @@ func render(_delta):
 	# Cursor Controls
 	get_node("../Cursor").attacking = (state_machine.current_combat_state == state_machine.CombatState.AIMING)
 	
-	# Head Controls
-	# Head.visible = (state_machine.current_combat_state == state_machine.CombatState.AIMING)
+	gun_active_aim()
 
 func play_new_anim(animation_name: String):
 	var anim_speed := 0.5 if state_machine.current_combat_state == state_machine.CombatState.AIMING else 1.0
@@ -190,6 +199,77 @@ func move_character(delta):
 	move_and_slide()
 
 # Combat Stuff 
+
+func get_joystick_aim_vector() -> Vector2:
+	# Raw axis read
+	var x = Input.get_action_strength("aim_right")
+	var y = Input.get_action_strength("aim_up")  # DO NOT invert here
+	
+	# Most controllers report up as NEGATIVE Y
+	# so when player pushes stick up, y becomes -1.
+	# Fix that by inverting AFTER reading:
+	y = -y
+
+	var v = Vector2(x, y)
+
+	# Deadzone
+	var deadzone := 0.25
+	if v.length() < deadzone:
+		return Vector2.ZERO
+
+	return v.normalized()
+
+
+func joystick_vector_to_world_point(dir: Vector2) -> Vector3:
+	if dir == Vector2.ZERO:
+		return global_position  # no aim
+
+	# var cam := get_viewport().get_camera_3d()
+
+	# Project forward from player in joystick direction
+	var forward = Vector3(dir.x, 0, dir.y)
+
+	# Place aim target several meters away
+	return global_position + forward.normalized() * 20.0
+
+
+func gun_active_aim():
+	var in_combat = (state_machine.current_combat_state != state_machine.CombatState.NONE)
+	$AimCone.visible = in_combat
+	if not in_combat:
+		return
+
+	# Read joystick
+	var stick = get_joystick_aim_vector()
+	var target_point: Vector3
+
+	if stick != Vector2.ZERO:
+		target_point = joystick_vector_to_world_point(stick)
+	else:
+		target_point = get_aim_target()
+
+	# Smooth aim
+	var desired_dir = (target_point - global_position)
+	desired_dir.y = 0
+	desired_dir = desired_dir.normalized()
+
+	# This smooths rotation and stops jitter
+	cone_aim_dir = cone_aim_dir.slerp(desired_dir, get_process_delta_time() * aim_smoothness)
+
+	# Finally rotate cone
+	$AimCone.point_towards(global_position + cone_aim_dir * 10.0)
+
+
+
+func shoot():
+	var aim_point = get_aim_target()
+	var aim_dir = (aim_point - global_position).normalized()
+	var hit_enemies = $AimCone.enemies_in_aim_cone(global_position, aim_dir, $AimCone.distance, $AimCone.angle_degrees)
+	print("Shot!", hit_enemies)
+	for e in hit_enemies:
+		e.take_damage(1)
+
+
 func _on_danger_zone_entered(body):
 	if body.is_in_group("enemy"):
 		enemies_in_range += 1
@@ -209,3 +289,59 @@ func _on_danger_zone_exited(body):
 		if enemies_in_range == 0:
 			emit_signal("combat_over")
 			state_machine.exit_combat_mode()
+
+func get_mouse_world_point() -> Vector3:
+	var vp = get_viewport()
+	var cam = vp.get_camera_3d()
+
+	var mouse_pos = vp.get_mouse_position()
+	var from = cam.project_ray_origin(mouse_pos)
+	var dir = cam.project_ray_normal(mouse_pos)
+
+	# intersect with world plane y = global_position.y (player's height)
+	var t = (global_position.y - from.y) / dir.y
+	return from + dir * t
+
+
+func get_aim_target() -> Vector3:
+	var stick = get_joystick_aim_vector()
+
+	# -------------------------
+	# Joystick overrides mouse
+	# -------------------------
+	if stick != Vector2.ZERO:
+		return joystick_vector_to_world_point(stick)
+
+	# -------------------------
+	# Otherwise use mouse aim
+	# -------------------------
+	var mouse_aim = get_mouse_world_point()
+	var best_target = null
+	var best_dist = 999.0
+
+	for enemy in get_tree().get_nodes_in_group("enemy"):
+		if not (enemy is BaseEnemy):
+			continue
+		if enemy.state == enemy.State.DEAD:
+			continue
+		
+		var to_enemy = enemy.global_position - global_position
+		to_enemy.y = 0
+		
+		var dist = to_enemy.length()
+		if dist > 10.0:
+			continue
+		
+		var mouse_dir = (mouse_aim - global_position).normalized()
+		var enemy_dir = to_enemy.normalized()
+		
+		var dot = mouse_dir.dot(enemy_dir)
+		
+		if dot > 0.85 and dist < best_dist:
+			best_dist = dist
+			best_target = enemy
+	
+	if best_target:
+		return best_target.global_position.lerp(mouse_aim, aim_assist_strength)
+
+	return mouse_aim

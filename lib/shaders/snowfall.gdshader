@@ -1,37 +1,39 @@
-shader_type spatial;
-render_mode unshaded, cull_disabled, depth_draw_always;
+// Rain and Snow shader by Brian Smith (steampunkdemon.itch.io)
+// MIT licence
 
-uniform float time;
-uniform float density = 2.0;
-uniform vec3 wind = vec3(0.2, -1.0, 0.1);
-uniform float flake_size = 0.005;
-uniform float fall_speed = 1.0;
-uniform float ground_height = 0.0; // stop below this
+shader_type canvas_item;
 
-float hash(vec3 p) {
-	return fract(sin(dot(p, vec3(127.1, 311.7, 74.7))) * 43758.5453);
-}
+uniform float rain_amount = 200.0;
+uniform float near_rain_length : hint_range(0.01, 1.0) = 0.02;
+uniform float far_rain_length : hint_range(0.01, 1.0) = 0.01;
+uniform float near_rain_width : hint_range(0.1, 1.0) = 0.1;
+uniform float far_rain_width : hint_range(0.1, 1.0) = 0.05;
+uniform float near_rain_transparency : hint_range(0.1, 1.0) = 1.0;
+uniform float far_rain_transparency : hint_range(0.1, 1.0) = 0.5;
+// Replace the below reference to source_color with hint_color if you are using a version of Godot before 4.
+uniform vec4 rain_color : source_color = vec4(0.8, 0.8, 0.8, 1.0);
+uniform float base_rain_speed : hint_range(0.1, 1.0) = 0.5;
+uniform float additional_rain_speed : hint_range(0.1, 1.0) = 0.5;
+uniform float slant : hint_range(-1.0, 1.0) = 0.2;
 
 void fragment() {
-	vec3 local_pos = VERTEX * density;
-	vec3 grid = floor(local_pos);
-	vec3 frac_pos = fract(local_pos);
+// To control the rainfall from your program comment out the below line and add a new uniform above as:
+// uniform float time = 10000.0;
+// Then update the time uniform from your _physics_process function by adding delta. You can then pause the rainfall by not changing the time uniform.
+	float time = 10000.0 + TIME;
 
-	// Animate fall
-	frac_pos.y = fract(frac_pos.y + time * fall_speed);
+// Uncomment the following line if you are applying the shader to a TextureRect and using a version of Godot before 4.
+//	COLOR = texture(TEXTURE,UV);
 
-	float rnd = hash(grid);
-	float flake = step(0.97, rnd);
-	float shape = step(length(frac_pos.xy - vec2(0.5)), flake_size);
+	vec2 uv = vec2(0.0);
+	float remainder = mod(UV.x - UV.y * slant, 1.0 / rain_amount);
+	uv.x = (UV.x - UV.y * slant) - remainder;
+	float rn = fract(sin(uv.x * rain_amount));
+	uv.y = fract((UV.y + rn));
 
-	float alpha = flake * shape;
+// Blurred trail. Works well for rain:
+//	COLOR = mix(COLOR, rain_color, smoothstep(1.0 - (far_rain_length + (near_rain_length - far_rain_length) * rn), 1.0, fract(uv.y - time * (base_rain_speed + additional_rain_speed * rn))) * (far_rain_transparency + (near_rain_transparency - far_rain_transparency) * rn) * step(remainder * rain_amount, far_rain_width + (near_rain_width - far_rain_width) * rn));
 
-	// Convert to world Y (relative to cube)
-	float world_y = (MODEL_MATRIX * vec4(VERTEX, 1.0)).y;
-	if (world_y < ground_height) {
-		alpha = 0.0; // hide flakes below ground
-	}
-
-	ALBEDO = vec3(1.0);
-	ALPHA = alpha;
+// No trail. Works well for snow:
+	COLOR = mix(COLOR, rain_color, step(1.0 - (far_rain_length + (near_rain_length - far_rain_length) * rn), fract(uv.y - time * (base_rain_speed + additional_rain_speed * rn))) * (far_rain_transparency + (near_rain_transparency - far_rain_transparency) * rn) * step(remainder * rain_amount, far_rain_width + (near_rain_width - far_rain_width) * rn));
 }

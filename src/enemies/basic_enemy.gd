@@ -11,9 +11,17 @@ enum State {
 }
 var state = State.IDLE
 
+enum MoveDirection { IDLE, FORWARD, BACKWARD, LEFT, RIGHT }
+var move_state: MoveDirection = MoveDirection.IDLE
+
+
 # Variables
 @onready var player: Node3D = get_tree().get_first_node_in_group("player")
 @onready var danger_zone = $DangerZone # Detection area
+
+# Animations
+@onready var character_sprite: AnimatedSprite3D = $skinSprite
+@onready var shirt_sprite: AnimatedSprite3D = $shirtSprite
 
 @export var max_health := 10
 var health := 10
@@ -29,6 +37,47 @@ var player_in_range := false
 
 @export var stagger_time := 0.3
 var stagger_timer := 0.0 # Amount of time the enemy gets stunned for
+
+# ------------------------
+# Helper Methods
+# ------------------------
+
+func play_anim(name: String):
+	character_sprite.play(name)
+	shirt_sprite.play(name)
+
+func update_movement_animation():
+	var v = velocity
+	v.y = 0  # ignore vertical movement
+
+	if v.length() < 0.1:
+		move_state = MoveDirection.IDLE
+		play_anim("standForward")
+		return
+
+	# Determine facing based on dominant axis of movement
+	if abs(v.z) > abs(v.x):
+		if v.z < 0:
+			move_state = MoveDirection.FORWARD
+			play_anim("walkForward")
+		else:
+			move_state = MoveDirection.BACKWARD
+			play_anim("walkBackward")
+	else:
+		if v.x > 0:
+			move_state = MoveDirection.RIGHT
+			character_sprite.flip_h = false
+			shirt_sprite.flip_h = false
+			play_anim("walkRight")
+		else:
+			move_state = MoveDirection.LEFT
+			character_sprite.flip_h = true
+			shirt_sprite.flip_h = true
+			play_anim("walkRight")
+
+# ------------------------
+# State Handling
+# ------------------------
 
 # Sensing
 func _on_detection_area_body_entered(body):
@@ -60,6 +109,8 @@ func _physics_process(delta: float) -> void:
 	if state == State.STAGGERED:
 		stagger_state(delta)
 		return
+	
+	update_movement_animation()
 	
 	match state:
 		State.IDLE:
