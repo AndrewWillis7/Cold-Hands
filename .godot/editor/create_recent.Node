@@ -1,5 +1,6 @@
-Control
 Sprite2D
+Control
+TextureRect
 GridContainer
 Label      - Matches the "text" keyword.
 RichTextLabel
@@ -11,5 +12,3 @@ CanvasLayer
 CollisionShape3D
 Area3D
 ColorRect
-MeshInstance3D
-Node3D

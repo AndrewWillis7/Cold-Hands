@@ -16,9 +16,17 @@ outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="Resource" id="Resource_sdud1"]
 script = ExtResource("6_xsrv6")
+rows = 4
+cols = 3
 metadata/_custom_type_script = "uid://bweo57oyl18ar"
 
-[node name="UserInterface" type="Node2D"]
+[node name="UserInterface" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 script = ExtResource("1_kvude")
@@ -48,20 +56,37 @@ visible = false
 script = ExtResource("3_v7dfl")
 
 [node name="InventoryUI" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_direction = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("6_lmgon")
 inventory_data = SubResource("Resource_sdud1")
 
-[node name="GridContainer" type="GridContainer" parent="InventoryUI"]
-layout_mode = 0
-offset_left = 552.0
-offset_top = 324.0
-offset_right = 592.0
-offset_bottom = 364.0
+[node name="GridLayer" type="GridContainer" parent="InventoryUI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 0
+theme_override_constants/v_separation = 0
+
+[node name="ItemLayer" type="Control" parent="InventoryUI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 
 [node name="DragPreviewSprite" type="Sprite2D" parent="InventoryUI"]
-position = Vector2(553, 324)
-scale = Vector2(6.080001, 9.673752)

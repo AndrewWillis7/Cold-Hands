@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemResource" load_steps=3 format=3 uid="uid://doos0pshm1w62"]
+
+[ext_resource type="Script" uid="uid://brgwvh0gybyb8" path="res://src/resources/item.gd" id="1_eoldk"]
+[ext_resource type="Texture2D" uid="uid://dykmui58ijx4b" path="res://lib/weapon_sprites/Shotgun_64.png" id="1_v1grl"]
+
+[resource]
+script = ExtResource("1_eoldk")
+icon = ExtResource("1_v1grl")
+size_y = 3
+item_type = "weapon"
+item_id = 10
+metadata/_custom_type_script = "uid://brgwvh0gybyb8"

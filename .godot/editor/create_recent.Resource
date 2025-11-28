@@ -1,3 +1,5 @@
+ItemResource
+CanvasTexture
 Resource
 Shader
 ShaderMaterial
